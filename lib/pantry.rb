@@ -10,11 +10,7 @@ class Pantry
 
   def check_stock(key)
     qty = @stock[key]
-    if qty == nil
-      0
-    else
-      qty
-    end
+    find_stock(qty)
   end
 
   def restock(key, amount)
@@ -25,17 +21,17 @@ class Pantry
     end
   end
 
-  def convert_units(hash)
-    hash = hash.ingredients; new_list = {}
-    hash.keys.each do |key|
-      check_for_units(hash, key, new_list)
+  def convert_units(recipe)
+    recipe = recipe.ingredients; new_list = {}
+    recipe.keys.each do |key|
+      check_for_units(recipe, key, new_list)
     end
     new_list
   end
 
-  def add_to_shopping_list(hash)
-    hash = hash.ingredients
-    @shopping_list.empty? ? add_to_empty(hash) : add_new_to_existing_list(hash)
+  def add_to_shopping_list(recipe)
+    recipe = recipe.ingredients
+    @shopping_list.empty? ? add_to_empty(recipe) : add_new_to_existing_list(recipe)
     @shopping_list
   end
 
@@ -49,26 +45,34 @@ class Pantry
 
   private
 
-  def check_for_units(hash, key, new_list)
-    if hash[key] > 100
-      new_list[key] = {:quantity => (hash[key] / 100), :units => "Centi-Units"}
-    elsif hash[key] < 1
-      new_list[key] = {:quantity => (hash[key] * 1000), :units => "Milli-Units"}
+  def find_stock(qty)
+    if qty == nil
+      0
     else
-      new_list[key] = {:quantity => hash[key], :units => "Universal-Units"}
+      qty
     end
   end
 
-  def add_to_empty(hash)
-    @shopping_list = hash
+  def check_for_units(recipe, key, new_list)
+    if recipe[key] > 100
+      new_list[key] = {:quantity => (recipe[key] / 100), :units => "Centi-Units"}
+    elsif recipe[key] < 1
+      new_list[key] = {:quantity => (recipe[key] * 1000), :units => "Milli-Units"}
+    else
+      new_list[key] = {:quantity => recipe[key], :units => "Universal-Units"}
+    end
   end
 
-  def add_new_to_existing_list(hash)
-    hash.keys.each do |key|
+  def add_to_empty(recipe)
+    @shopping_list = recipe
+  end
+
+  def add_new_to_existing_list(recipe)
+    recipe.keys.each do |key|
       if @shopping_list.key?(key) == true
-        @shopping_list[key] = (@shopping_list[key] + hash[key])
+        @shopping_list[key] = (@shopping_list[key] + recipe[key])
       else
-        @shopping_list[key] = hash[key]
+        @shopping_list[key] = recipe[key]
       end
     end
   end
