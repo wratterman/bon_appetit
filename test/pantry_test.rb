@@ -51,10 +51,13 @@ class PantryTest < Minitest::Test
   def test_it_can_convert_units_from_recipe_class
     assert_instance_of Hash, @pan.convert_units(@rec_1)
     assert_equal 3, @pan.convert_units(@rec_1).length
+
     assert_equal 5, @pan.convert_units(@rec_1)["Flour"][:quantity]
     assert_equal "Centi-Units", @pan.convert_units(@rec_1)["Flour"][:units]
+
     assert_equal 25, @pan.convert_units(@rec_1)["Cayenne Pepper"][:quantity]
     assert_equal "Milli-Units", @pan.convert_units(@rec_1)["Cayenne Pepper"][:units]
+
     assert_equal 75, @pan.convert_units(@rec_1)["Cheese"][:quantity]
     assert_equal "Universal-Units", @pan.convert_units(@rec_1)["Cheese"][:units]
   end
@@ -62,10 +65,13 @@ class PantryTest < Minitest::Test
   def test_it_can_convert_units_from_recipe_class_2
     assert_instance_of Hash, @pan.convert_units(@rec_2)
     assert_equal 3, @pan.convert_units(@rec_2).length
+
     assert_equal 3, @pan.convert_units(@rec_2)["Olives"][:quantity]
     assert_equal "Universal-Units", @pan.convert_units(@rec_2)["Olives"][:units]
+
     assert_equal 750, @pan.convert_units(@rec_2)["Cheese"][:quantity]
     assert_equal "Milli-Units", @pan.convert_units(@rec_2)["Cheese"][:units]
+
     assert_equal 1, @pan.convert_units(@rec_2)["Sauce"][:quantity]
     assert_equal "Centi-Units", @pan.convert_units(@rec_2)["Sauce"][:units]
   end
