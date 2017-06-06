@@ -6,4 +6,21 @@ class Pantry
     @stock = {}
   end
 
+  def check_stock(key)
+    qty = @stock[key]
+    if qty == nil
+      0
+    else
+      qty
+    end
+  end
+
+  def restock(key, amount)
+    if @stock[key] == nil
+      @stock[key] = amount
+    else
+      @stock[key] = @stock[key] + amount
+    end
+  end
+
 end

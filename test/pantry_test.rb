@@ -16,4 +16,17 @@ class PantryTest < Minitest::Test
     assert_instance_of Hash, a.stock
     assert_equal 0, a.stock.length
   end
+
+  def test_it_can_check_against_stocks
+    a = Pantry.new
+
+    assert_equal 0, a.check_stock("Cheese")
+  end
+
+  def test_it_can_restock_its_stock
+    a = Pantry.new
+    a.restock("Cheese", 10)
+
+    assert_equal 10, a.check_stock("Cheese")
+  end
 end
