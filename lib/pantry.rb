@@ -36,14 +36,9 @@ class Pantry
   def add_to_shopping_list(hash)
     hash = hash.ingredients
     if @shopping_list.empty?
-      @shopping_list = hash
-    else hash.keys.each do |key|
-      if @shopping_list.key?(key) == true
-        @shopping_list[key] = (@shopping_list[key] + hash[key])
-      else
-        @shopping_list[key] = hash[key]
-      end
-    end
+      add_to_empty(hash)
+    else
+      add_new_to_existing_list(hash)
     end
     @shopping_list
   end
@@ -57,6 +52,20 @@ class Pantry
       new_list[key] = {:quantity => (hash[key] * 1000), :units => "Milli-Units"}
     else
       new_list[key] = {:quantity => hash[key], :units => "Universal-Units"}
+    end
+  end
+
+  def add_to_empty(hash)
+    @shopping_list = hash
+  end
+
+  def add_new_to_existing_list(hash)
+    hash.keys.each do |key|
+      if @shopping_list.key?(key) == true
+        @shopping_list[key] = (@shopping_list[key] + hash[key])
+      else
+        @shopping_list[key] = hash[key]
+      end
     end
   end
 end
