@@ -23,4 +23,7 @@ class Pantry
     end
   end
 
+  def convert_units(hash)
+  end
+
 end

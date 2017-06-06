@@ -1,43 +1,51 @@
 require './lib/pantry'
+require './lib/recipe'
 require 'minitest/autorun'
 require 'minitest/pride'
 
 class PantryTest < Minitest::Test
 
-  def test_it_exists
-    a = Pantry.new
+  def setup
+    @pan = Pantry.new
+    rec = Recipe.new("Cheese Pizza")
+    bi_1 = rec.add_ingredient("Cayenne Pepper", 0.025)
+    bi_2 = rec.add_ingredient("Cheese", 75)
+    bi_3 = rec.add_ingredient("Flour", 500)
+    @rec = rec
+  end
 
-    assert_instance_of Pantry, a
+  def test_it_exists
+    assert_instance_of Pantry, @pan
   end
 
   def test_it_has_stock
-    a = Pantry.new
-
-    assert_instance_of Hash, a.stock
-    assert_equal 0, a.stock.length
+    assert_instance_of Hash, @pan.stock
+    assert_equal 0, @pan.stock.length
   end
 
   def test_it_can_check_against_stocks
-    a = Pantry.new
-
-    assert_equal 0, a.check_stock("Cheese")
+    assert_equal 0, @pan.check_stock("Cheese")
   end
 
   def test_it_can_restock_its_stock
-    a = Pantry.new
-    a.restock("Cheese", 10)
+    @pan.restock("Cheese", 10)
 
-    assert_equal 10, a.check_stock("Cheese")
+    assert_equal 10, @pan.check_stock("Cheese")
 
-    a.restock("Cheese", 20)
+    @pan.restock("Cheese", 20)
 
-    assert_equal 30, a.check_stock("Cheese")
+    assert_equal 30, @pan.check_stock("Cheese")
   end
 
   def test_it_can_restock_its_stock_again
-    a = Pantry.new
-    a.restock("Tacos", 20)
+    @pan.restock("Tacos", 20)
 
-    assert_equal 20, a.check_stock("Tacos")
+    assert_equal 20, @pan.check_stock("Tacos")
+  end
+
+  def test_it_can_convert_units_from_recipe_class
+    assert_instance_of Hash, @pan.convert_units(@rec)
+    assert_equal 5, @pan.convert_units(@rec)["Flour"][0]
+    assert_equal "Centi-Units", @pan.convert_units(@rec)["Flour"][1]
   end
 end
