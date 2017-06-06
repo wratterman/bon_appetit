@@ -70,4 +70,13 @@ class PantryTest < Minitest::Test
     assert_equal "Centi-Units", @pan.convert_units(@rec_2)["Sauce"][:units]
   end
 
+  def test_it_can_add_to_grocery_list
+    r = Recipe.new("Cheese Pizza")
+    r.add_ingredient("Cheese", 20)
+    r.add_ingredient("Flour", 20)
+    @pan.add_to_shopping_list(r)
+
+    assert_instance_of Hash, @pan.shopping_list
+    assert_equal 20, @pan.shopping_list["Cheese"]
+  end
 end

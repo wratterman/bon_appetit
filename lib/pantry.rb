@@ -1,7 +1,7 @@
 require 'pry'
 class Pantry
 
-  attr_reader :stock
+  attr_reader :stock, :shopping_list
 
   def initialize
     @stock = {}
@@ -25,13 +25,22 @@ class Pantry
   end
 
   def convert_units(hash)
-    hash = hash.ingredients
-    new_list = {}
+    hash = hash.ingredients; new_list = {}
     hash.keys.each do |key|
       check_for_units(hash, key, new_list)
     end
     new_list
   end
+
+  def add_to_shopping_list(hash)
+    @shopping_list = {}
+    hash = hash.ingredients
+    if @shopping_list.empty?
+      @shopping_list = hash
+    end
+  end
+
+  private
 
   def check_for_units(hash, key, new_list)
     if hash[key] > 100
@@ -42,5 +51,4 @@ class Pantry
       new_list[key] = {:quantity => hash[key], :units => "Universal-Units"}
     end
   end
-
 end
