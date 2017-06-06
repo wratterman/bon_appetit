@@ -5,6 +5,7 @@ class Pantry
 
   def initialize
     @stock = {}
+    @shopping_list = {}
   end
 
   def check_stock(key)
@@ -33,11 +34,18 @@ class Pantry
   end
 
   def add_to_shopping_list(hash)
-    @shopping_list = {}
     hash = hash.ingredients
     if @shopping_list.empty?
       @shopping_list = hash
+    else hash.keys.each do |key|
+      if @shopping_list.key?(key) == true
+        @shopping_list[key] = (@shopping_list[key] + hash[key])
+      else
+        @shopping_list[key] = hash[key]
+      end
     end
+    end
+    @shopping_list
   end
 
   private
