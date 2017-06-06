@@ -35,11 +35,7 @@ class Pantry
 
   def add_to_shopping_list(hash)
     hash = hash.ingredients
-    if @shopping_list.empty?
-      add_to_empty(hash)
-    else
-      add_new_to_existing_list(hash)
-    end
+    @shopping_list.empty? ? add_to_empty(hash) : add_new_to_existing_list(hash)
     @shopping_list
   end
 
