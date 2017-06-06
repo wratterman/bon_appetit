@@ -39,6 +39,14 @@ class Pantry
     @shopping_list
   end
 
+  def print_shopping_list
+    printed_list = ""
+    @shopping_list.keys.each do |key|
+      printed_list << "* #{key}: #{@shopping_list[key]}\n"
+    end
+    p printed_list.chomp
+  end
+
   private
 
   def check_for_units(hash, key, new_list)

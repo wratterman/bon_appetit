@@ -95,4 +95,19 @@ class PantryTest < Minitest::Test
     assert_instance_of Hash, @pan.shopping_list
     assert_equal 25, @pan.shopping_list["Cheese"]
   end
+
+  def test_it_can_print_shopping_list
+    r = Recipe.new("Cheese Pizza")
+    r.add_ingredient("Cheese", 20)
+    r.add_ingredient("Flour", 20)
+
+    r_1 = Recipe.new("Spaghetti")
+    r_1.add_ingredient("Noodles", 10)
+    r_1.add_ingredient("Sauce", 10)
+    r_1.add_ingredient("Cheese", 5)
+    @pan.add_to_shopping_list(r)
+    @pan.add_to_shopping_list(r_1)
+
+    assert_equal "* Cheese: 25\n* Flour: 20", @pan.print_shopping_list[0..23]
+  end
 end
