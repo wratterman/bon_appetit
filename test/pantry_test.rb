@@ -45,7 +45,6 @@ class PantryTest < Minitest::Test
 
   def test_it_can_convert_units_from_recipe_class
     assert_instance_of Hash, @pan.convert_units(@rec)
-    assert_equal 5, @pan.convert_units(@rec)["Flour"][0]
-    assert_equal "Centi-Units", @pan.convert_units(@rec)["Flour"][1]
+    assert_equal 3, @pan.convert_units(@rec).length
   end
 end

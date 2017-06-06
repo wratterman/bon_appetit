@@ -1,3 +1,4 @@
+require 'pry'
 class Pantry
 
   attr_reader :stock
@@ -24,6 +25,18 @@ class Pantry
   end
 
   def convert_units(hash)
+    hash = hash.ingredients
+    new_list = {}
+    hash.keys.each do |key|
+      if hash[key] > 100
+        new_list[key] = {:quantity => (hash[key] / 100), :units => "Centi-Units"}
+      elsif hash[key] < 1
+        new_list[key] = {:quantity => (hash[key] * 1000), :units => "Milli-Units"}
+      else
+        new_list[key] = {:quantity => hash[key], :units => "Universal-Units"}
+      end
+    end
+    new_list
   end
 
 end
